@@ -61,6 +61,14 @@ public class AquaComputerGroup : IGroup
                     _hardware.Add(octo);
                     break;
 
+                case 0xF00D:
+                    var quadro = new Quadro(dev, settings);
+                    _report.AppendLine($"Device name: {productName}");
+                    _report.AppendLine($"Firmware version: {quadro.FirmwareVersion}");
+                    _report.AppendLine();
+                    _hardware.Add(quadro);
+                    break;
+
                 default:
                     _report.AppendLine($"Unknown Hardware PID: {dev.ProductID} Name: {productName}");
                     _report.AppendLine();
