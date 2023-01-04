@@ -96,8 +96,8 @@ internal sealed class Quadro : Hardware
     private const int CapabilityNumTemperatureSensors = 4;
     private const int CapabilityNumFans = 4;
 
-    private readonly Sensor VCCSensor;
-    private readonly Sensor FlowSensor;
+    private readonly Sensor _vccSensor;
+    private readonly Sensor _flowSensor;
     private readonly Sensor[] _rpmSensors = new Sensor[CapabilityNumFans];
     private readonly Sensor[] _temperatures = new Sensor[CapabilityNumTemperatureSensors];
 
@@ -124,11 +124,11 @@ internal sealed class Quadro : Hardware
                 ActivateSensor(_rpmSensors[i]);
             }
 
-            VCCSensor = new Sensor("VCC", 0, SensorType.Voltage, this, Array.Empty<ParameterDescription>(), settings);
-            ActivateSensor(VCCSensor);
+            _vccSensor = new Sensor("VCC", 0, SensorType.Voltage, this, Array.Empty<ParameterDescription>(), settings);
+            ActivateSensor(_vccSensor);
 
-            FlowSensor = new Sensor("Flow", 0, SensorType.Flow, this, Array.Empty<ParameterDescription>(), settings);
-            ActivateSensor(FlowSensor);
+            _flowSensor = new Sensor("Flow", 0, SensorType.Flow, this, Array.Empty<ParameterDescription>(), settings);
+            ActivateSensor(_flowSensor);
         }
     }
 
@@ -238,7 +238,7 @@ internal sealed class Quadro : Hardware
             _rpmSensors[i].Value = quadroReport.Fans[i].Speed;
         }
 
-        VCCSensor.Value = quadroReport.VCC;
-        FlowSensor.Value = quadroReport.Flow;
+        _vccSensor.Value = quadroReport.VCC;
+        _flowSensor.Value = quadroReport.Flow;
     }
 }
